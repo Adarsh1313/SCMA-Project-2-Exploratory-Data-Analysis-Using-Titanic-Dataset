@@ -1,0 +1,65 @@
+
+## 1. Age (Numerical Variable)
+
+titanic.Age.describe()
+titanic.Age.isnull().sum()
+titanic.Age.plot(kind='hist',bins=80)
+titanic.Age.plot(kind='kde', title="Age KDE Plot")
+titanic.Age.skew()
+titanic.Age.plot(kind='box', title='Age Box Plot')
+
+## 2. Fare (Numerical Variable)
+
+titanic.Fare.describe()
+titanic.Fare.isnull().sum()
+titanic.Fare.plot(kind='hist',bins=20)
+titanic.Fare.plot(kind='kde', title="Fare KDE Plot")
+titanic.Fare.skew()
+titanic.Fare.plot(kind='box', title='Fare Box Plot')
+
+## 3. SibSp (Numerical Variable)
+
+titanic.SibSp.describe()
+titanic.SibSp.isnull().sum()
+titanic.SibSp.plot(kind='hist',bins=60)
+titanic.SibSp.plot(kind='kde', title="SibSp KDE Plot")
+titanic.SibSp.skew()
+titanic.SibSp.plot(kind='box', title='SibSp Box Plot')
+
+## 4. Parch (Numerical Variable)
+
+titanic.Parch.describe()
+titanic.Parch.isnull().sum()
+titanic.Parch.plot(kind='hist',bins=60)
+titanic.Parch.plot(kind='kde', title="Parch KDE Plot")
+titanic.Parch.skew()
+titanic.Parch.plot(kind='box', title='Parch Box Plot')
+
+## 5. Survived (Categorical Variable)
+
+titanic.Survived.describe()
+titanic['Survived'].value_counts()
+titanic['Survived'].value_counts().plot(kind='bar')
+titanic['Survived'].value_counts().plot(kind='pie', autopct='%.2f')
+
+## 6. Pclass (Categorical Variable)
+
+titanic.Pclass.describe()
+titanic['Pclass'].value_counts()
+titanic['Pclass'].value_counts().plot(kind='bar')
+titanic['Pclass'].value_counts().plot(kind='pie', autopct='%.2f')
+
+## 7. Sex (Categorical Variable)
+
+titanic.Sex.describe()
+titanic['Sex'].value_counts()
+titanic['Sex'].value_counts().plot(kind='bar')
+titanic['Sex'].value_counts().plot(kind='pie', autopct='%.2f')
+
+## 8. Embarked (Categorical Variable)
+
+titanic.Embarked.describe()
+titanic.Embarked.isnull().sum()
+titanic['Embarked'].value_counts()
+titanic['Embarked'].value_counts().plot(kind='bar')
+titanic['Embarked'].value_counts().plot(kind='pie', autopct='%.2f')
