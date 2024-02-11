@@ -1,0 +1,214 @@
+# importing necessary libraries and dataset
+
+import pandas as pd #pd is alias
+
+titanic = pd.read_csv("D:\\Downloads\\Stats Modelling Projects\\Assignment 2\\train.csv")
+
+titanic.head(10)
+
+# dataframe.info() - to get info about data
+titanic.info()
+
+# dataframe.describe() - to get description about data
+titanic.describe()
+
+# import necessary libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Installation of pakcages from python repository - install both seperately.
+pip install matplotlib
+pip install seaborn
+
+# used to change and improt wkd
+import os
+os.chdir("D:\\Downloads\\Stats Modelling Projects\\Assignment 2")
+
+# to check current working directory
+os.getcwd()
+
+# no of missing values by each variable / column
+titanic.isna().sum()
+
+## Conclusion about missing values
+##### - age has 177 missing values
+##### - embarked has 2 missing values
+##### - cabin has a lot of missing values (so we should drop the entire variable)
+
+### **1. Age Variable**
+
+# How to describe variable in dataset - (it's case sensitive)
+titanic['Age'].describe()
+
+# Another way to describe a variable
+titanic.Age.describe()
+
+# Histogram - to know the distribution
+titanic.Age.plot(kind='hist',bins=80)
+
+#kde plot to know the distribution
+titanic.Age.plot(kind='kde')
+#kde plot with title to know the distribution
+titanic.Age.plot(kind='kde', title="Age KDE Plot")
+
+#skewness is 0 - data is normally distributed
+titanic.Age.skew()
+
+# conclusion
+# almost normal - not normal entirely
+
+#checking percent of missing values (total values of age/ null values of age)
+titanic.Age.isnull().sum()/len(titanic.Age)
+
+#null value recognition of a variable - code
+titanic.Age.isnull().sum()
+
+#outlier detection
+titanic.Age.plot(kind='box', title='Age Box Plot')
+
+#Codes to execute
+titanic[titanic['Age'] > 65]
+
+(titanic['Age'] > 65).tail(10)
+
+titanic[titanic['Age']> 65]
+
+### Survived - Categorical Variable Analysis (Yes or No)
+
+#shift + tab to know more about the variable
+titanic['Survived'].value_counts()
+
+#plot bar chart
+titanic['Survived'].value_counts().plot(kind='bar')
+
+#plot pie chart
+titanic['Survived'].value_counts().plot(kind='pie', autopct='%.2f')
+
+# Bi-Variate Analysis
+
+titanic['Ticket'].value_counts()
+
+titanic[titanic['Ticket'] == 'CA. 2343' ]
+
+# survived and pclass
+
+pd.crosstab(titanic.Survived, titanic.Pclass)
+
+pd.crosstab(titanic.Survived, titanic.Pclass, normalize = 'columns')*100
+
+#conclusion
+#people travelling in Pclass are more liekly to survive
+
+sns.heatmap(pd.crosstab(titanic.Survived, titanic.Pclass, normalize = 'columns')*100)
+
+pd.crosstab(titanic.Survived, titanic.Sex, normalize = 'columns')*100
+
+sns.heatmap(pd.crosstab(titanic.Survived, titanic.Sex, normalize = 'columns')*100)
+
+pd.crosstab(index=[titanic['Survived'], titanic['Sex']], columns=[titanic['Pclass']])
+
+pd.crosstab(index=titanic['Survived'], columns=[titanic['Pclass'], titanic['Sex']])
+
+#Age vs Survived
+
+titanic.Survived == 1
+
+titanic[titanic['Survived'] == 1]['Age'].value_counts()
+
+#error
+titanic[titanic['Survived'] == 0]['Age'].plot(kind='kde', label='Dist of Age of People Survived)
+
+titanic[titanic['Survived'] == 1]['Age'].plot(kind='kde', label='Survived')
+
+titanic[titanic['Survived'] == 0]['Age'].plot(kind='kde', label='Not Survived')
+
+plt.legend()
+plt.show()
+
+titanic.Pclass == 1
+
+titanic[titanic['Pclass'] == 1]['Age'].value_counts()
+
+titanic[titanic['Pclass'] == 1]['Age'].mean()
+
+### Feature Engineering on Fare Column
+
+titanic['Fare'].value_counts()
+
+titanic.columns
+
+#new feature called familysize
+titanic['family_size'] = titanic.SibSp + titanic.Parch + 1
+
+titanic
+
+#individual fare column
+titanic['indifare'] = titanic.Fare / titanic.familysize
+
+titanic['indifare']
+
+titanic
+
+##### family type , if family size = 1 (then he is alone) and 
+#####              if family size = more than 2 less than 5 (then small family) and 
+#####             if family size = more than 5 (then big family) 
+
+# custom or user defined function
+def transform_family_size(num): 
+    if num == 1:
+        return 'alone'
+    elif num > 1 and num <=5:
+        return 'small family'
+    else:
+        return 'large family'
+    
+
+titanic['family_type'] = titanic['family_size'].apply(transform_family_size)
+
+titanic
+
+#user defined functions
+def sum_of_numbers(x,y,z):
+    return x+y+z
+
+sum_of_numbers(1,2,3)
+
+# function to calculate (a+b)^2
+def sqofnumber(a,b):
+    return (a**2)+(b**2)+(2*a*b)
+
+sqofnumber(1,2)
+
+# function to calculate sq root of a number
+def sqroot(a):
+    return a**1/2
+
+sqroot(4)
+
+import math
+
+def sqrootofanumber(a):
+    return math.sqrt(a)
+
+sqrootofanumber(100)
+
+# custom or user defined function
+def age_trans(num): 
+    if 0< num <=15:
+        return 'kid'
+    elif  num <=60:
+        return 'adults'
+    else:
+        return 'seniors'
+
+titanic['age_group'] = titanic['Age'].apply(age_trans)
+
+titanic
+
+pd.crosstab(titanic.Survived, titanic.age_group, normalize = 'columns')*100
+
+pd.crosstab(titanic.Survived, titanic.family_size, normalize = 'columns')*100
+
+Logistic Regression:
